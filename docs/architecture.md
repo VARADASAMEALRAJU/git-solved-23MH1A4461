@@ -1,69 +1,112 @@
-# System Architecture
+# System Architecture (Unified + Experimental Overview)
 
 ## Overview
-DevOps Simulator follows a **microservices architecture** designed for **high availability** and **scalability**.  
-This document merges both **Production** and **Development** architecture details.
+DevOps Simulator follows a **microservices architecture** designed for **high availability**, **scalability**, and **experimental innovation**.
 
 - **Production Version** → Focused on reliability, auto-scaling, and monitoring.  
-- **Development Version** → Includes hot-reload, experimental tools, and debug support.
+- **Development Version** → Includes hot-reload, experimental tools, and debug support.  
+- **Experimental Additions** → AI/ML-powered orchestration, multi-cloud scaling, and chaos engineering *(not production-ready)*.
 
 ---
 
-## Components
+## Core Architecture
 
 ### 1. Application Server
-**Production:**
-- **Technology:** Node.js + Express  
-- **Port:** 8080  
-- **Scaling:** Horizontal auto-scaling enabled  
 
-**Development:**
-- **Technology:** Node.js + Express *(with hot reload)*  
-- **Port:** 3000  
-- **Scaling:** Manual (single instance for dev)  
+**Production / Development:**
+- **Technology:** Node.js + Express  
+- **Ports:**  
+  - Production → 8080  
+  - Development → 3000  
+- **Scaling:**  
+  - Production → Horizontal auto-scaling  
+  - Development → Manual (single instance)  
 - **Debug:** Chrome DevTools debugger on port 9229  
+
+**Experimental (Optional):**
+- **Technology Add-ons:** TensorFlow.js integration  
+- **Ports:** 9000 (main), 9001 (metrics), 9002 (AI API)  
+- **Intelligence:** Predictive auto-scaling with ML inference  
+- **Event System:** Apache Kafka for message streaming  
 
 ---
 
 ### 2. Database Layer
+
 **Production:**
 - **Database:** PostgreSQL 14  
-- **Configuration:** Master-slave replication  
-- **Backup:** Daily automated backups  
+- **Replication:** Master-slave replication  
+- **Backup:** Automated daily  
 
 **Development:**
-- **Database:** PostgreSQL 14 *(local instance)*  
-- **Configuration:** Single instance *(no replication)*  
-- **Backup:** Manual backups only  
+- **Database:** Local PostgreSQL 14  
+- **Replication:** None (single instance)  
+- **Backup:** Manual or on-demand  
 - **Seeding:** Auto-seed with test data on startup  
+
+**Experimental (Optional):**
+- **Architecture:** Distributed PostgreSQL cluster (5 nodes)  
+- **Cache Layer:** Redis cluster with ML-based optimization  
+- **Backup:** Continuous backup with geo-redundancy  
+- **AI Features:** Query optimization & index suggestions  
 
 ---
 
 ### 3. Monitoring System
+
 **Production:**
-- **Tool:** Prometheus + Grafana  
+- **Tools:** Prometheus + Grafana  
 - **Metrics:** CPU, Memory, Disk, Network  
-- **Alerts:** Email notifications for critical issues  
+- **Alerts:** Email notifications for critical events  
 
 **Development:**
-- **Tool:** Basic console logging + optional Prometheus  
-- **Metrics:** CPU, Memory, Disk, Network, Build time  
-- **Alerts:** Console warnings *(no email)*  
-- **Dashboard:** In-development web dashboard  
+- **Tools:** Console logging or basic Prometheus  
+- **Metrics:** CPU, Memory, Disk, Network, Build Time  
+- **Alerts:** Console-only warnings  
+- **Dashboard:** Experimental web dashboard  
+
+**Experimental (Optional):**
+- **Metrics Framework:** Prometheus + Thanos (for long-term metrics)  
+- **Logs:** ELK Stack with AI-based anomaly detection  
+- **AI Models:** Predictive health analysis (LSTM, XGBoost)  
 
 ---
 
-### 4. Container Orchestration *(Development Only)*
-- **Tool:** Docker Compose *(local)*  
+### 4. Container & Orchestration
+
+**Production:**  
+- **Tool:** Kubernetes  
+- **Deployment:** Rolling updates with zero downtime  
+
+**Development:**  
+- **Tool:** Docker Compose (local)  
 - **Services:** App, Database, Redis cache  
-- **Volume Mounts:** Code directory for hot reload  
+- **Volume Mounts:** Hot reload enabled  
+
+**Experimental:**  
+- **Tool:** Multi-Cloud Kubernetes (AWS, Azure, GCP, DigitalOcean)  
+- **Load Balancing:** Global Anycast with GeoDNS  
+- **Failover:** Automatic cross-cloud migration  
 
 ---
 
-### 5. Authentication System *(Development Beta)*
+### 5. Authentication System
+
+**Development Beta:**
 - **Method:** OAuth2 + JWT  
-- **Providers:** Google, GitHub *(for testing)*  
-- **Sessions:** Redis-based session storage  
+- **Providers:** Google, GitHub (for testing)  
+- **Session Store:** Redis  
+
+---
+
+### 6. AI/ML Pipeline *(Experimental Only)*
+- **Frameworks:** TensorFlow, PyTorch, Scikit-learn  
+- **Models:**  
+  - LSTM → Anomaly detection  
+  - XGBoost → Load prediction  
+  - Reinforcement Learning → Auto-scaling optimizer  
+- **Training:** Continuous online learning  
+- **Inference Latency:** <50ms  
 
 ---
 
@@ -75,18 +118,14 @@ This document merges both **Production** and **Development** architecture detail
 - **Rollback:** Automated on failure  
 
 **Development:**
-- **Method:** Docker Compose hot reload  
-- **Zero-downtime:** Not applicable  
-- **Rollback:** Git checkout previous commit  
+- **Method:** Docker Compose (hot reload)  
+- **Zero-downtime:** No  
+- **Rollback:** Git checkout to previous commit  
 
----
-
-## Development Workflow *(Development Only)*
-1. Make code changes  
-2. Auto-reload triggers rebuild  
-3. Run unit tests  
-4. Check console logs  
-5. Commit when ready  
+**Experimental (Optional):**
+- **Deployment Strategy:** Canary + Blue-Green with AI feedback loop  
+- **Chaos Engineering:** Optional — disabled by default  
+- **Observability:** AI-Driven anomaly detection dashboard  
 
 ---
 
@@ -98,15 +137,25 @@ This document merges both **Production** and **Development** architecture detail
 - Regular security audits  
 
 **Development:**
-- SSL/TLS disabled *(local use only)*  
-- Database credentials stored in plain text  
-- CORS enabled for all origins  
+- SSL disabled (local)  
 - Debug endpoints exposed  
+- CORS enabled for testing  
+
+**Experimental:**
+- Zero-trust architecture  
+- AES-256 encryption  
+- Audit logging and ML-based anomaly flagging  
 
 ---
 
-## Experimental Features 
-> These are development-only and subject to change:
-- Multi-cloud deployment  
-- AI-powered log analysis  
-- Automatic rollback on anomaly detection  
+## Summary
+
+| Environment | Focus | Stability | Features |
+|--------------|--------|------------|-----------|
+| **Production** | Reliability, Performance | ✅ Stable | Auto-scaling, Monitoring |
+| **Development** | Testing, Debugging | ⚙️ Moderate | Hot reload, Local DB |
+| **Experimental** | AI/ML Innovation | 🚧 Unstable | Predictive scaling, Multi-cloud, Chaos tests |
+
+---
+
+**Note:** Experimental features are optional and disabled by default. Enable via feature flags or environment variables when testing.

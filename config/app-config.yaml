@@ -1,42 +1,70 @@
-# Production base configuration (kept primary)
+# DevOps Simulator - Unified Configuration
+# Combines stable production setup with optional experimental features
+# Experimental options are disabled by default and not production-ready.
+
 application:
   name: DevOpsSimulator
-  version: 1.0.0
+  version: 2.5.0-unified
   environment: production
+  experimental_mode: false   # Set true to test new features safely
 
-  # Production server setup
-  server:
-    host: 0.0.0.0
-    port: 8080
-    ssl_enabled: true
+server:
+  host: 0.0.0.0
+  port: 8080
+  ssl_enabled: true
+  # Experimental multi-port setup (for load testing)
+  multi_port:
+    - 9000
+    - 9001
+    - 9002
+  enable_multi_port: false
 
-  # Production logging setup
-  logging:
-    level: INFO
-    format: json
-    output: /var/log/app.log
+logging:
+  level: INFO
+  format: json
+  output: /var/log/app.log
+  # Optional AI-assisted structured logging (experimental)
+  structured_logging: false
+  ai_analysis: false
 
-  # Production database (kept intact)
-  database:
-    host: prod-db.example.com
-    port: 5432
-    name: devops_prod
+database:
+  host: prod-db.example.com
+  port: 5432
+  name: devops_prod
+  distributed: false
+  # Enable distributed DB only in experimental mode
+  enable_distributed_db: false
 
-  # Core production features
-  features:
-    auto_scaling: true
-    load_balancer: enabled
-    backup_enabled: true
+features:
+  auto_scaling: true
+  load_balancer: enabled
+  backup_enabled: true
+  # Optional experimental features (controlled via feature flags)
+  chaos_engineering: false
+  predictive_scaling: false
+  anomaly_detection: false
+  auto_optimization: false
 
-  # Optional development enhancements added
-  development:
-    hot_reload: true
-    mock_external_apis: true
-    debug_mode: true
-    cors_enabled: true
+development:
+  hot_reload: true
+  mock_external_apis: true
+  debug_mode: true
+  cors_enabled: true
 
-  # Optional notification integrations
-  notifications:
-    slack_webhook: "https://hooks.slack.com/services/XXX"
-    discord_webhook: "https://discord.com/api/webhooks/YYY"
-    email_alerts: false
+notifications:
+  slack_webhook: "https://hooks.slack.com/services/XXX"
+  discord_webhook: "https://discord.com/api/webhooks/YYY"
+  email_alerts: false
+
+cloud_providers:
+  - aws
+  - azure
+  - gcp
+  # Optional:
+  # - digitalocean  (experimental)
+
+security:
+  ssl_enforced: true
+  encryption: AES-256
+  audit_logging: standard
+  zero_trust: false   # experimental, enable in future releases
