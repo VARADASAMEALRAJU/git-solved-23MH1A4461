@@ -105,3 +105,4 @@ echo "================================================"
 echo "Deployment completed successfully!"
 echo "Application available at: $APP_URL"
 echo "================================================"
+BUG
