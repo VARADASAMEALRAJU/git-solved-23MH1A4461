@@ -1,4 +1,5 @@
 # Development Application Configuration
+
 application:
   name: DevOpsSimulator
   version: 2.0.0-beta
