@@ -1,22 +1,52 @@
 {
-  "connection": {
-    "host": "prod-db.example.com",
-    "port": 5432,
-    "database": "devops_production",
-    "username": "prod_admin",
-    "ssl_mode": "require",
-    "pool_size": 20,
-    "timeout": 30
+  "production": {
+    "connection": {
+      "host": "prod-db.example.com",
+      "port": 5432,
+      "database": "devops_production",
+      "username": "prod_admin",
+      "ssl_mode": "require",
+      "pool_size": 20,
+      "timeout": 30
+    },
+    "backup": {
+      "enabled": true,
+      "schedule": "0 2 * * *",
+      "retention_days": 30,
+      "location": "/backups/database"
+    },
+    "replication": {
+      "enabled": true,
+      "replicas": 2,
+      "sync_mode": "synchronous"
+    }
   },
-  "backup": {
-    "enabled": true,
-    "schedule": "0 2 * * *",
-    "retention_days": 30,
-    "location": "/backups/database"
-  },
-  "replication": {
-    "enabled": true,
-    "replicas": 2,
-    "sync_mode": "synchronous"
+  "development": {
+    "connection": {
+      "host": "localhost",
+      "port": 5432,
+      "database": "devops_development",
+      "username": "dev_user",
+      "password": "dev_password",
+      "ssl_mode": "disable",
+      "pool_size": 5,
+      "timeout": 10
+    },
+    "backup": {
+      "enabled": false,
+      "schedule": "manual",
+      "retention_days": 7,
+      "location": "/tmp/backups"
+    },
+    "replication": {
+      "enabled": false,
+      "replicas": 0,
+      "sync_mode": "asynchronous"
+    },
+    "development": {
+      "seed_data": true,
+      "reset_on_restart": true,
+      "debug_queries": true
+    }
   }
 }

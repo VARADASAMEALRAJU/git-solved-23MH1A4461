@@ -1,17 +1,30 @@
 #!/bin/bash
-# Production Deployment Script
-# Version: 1.0.0
+# Unified Deployment Script
+# Handles both Production and Development environments
+# Version: 2.0.0
 
 set -e
 
 echo "====================================="
-echo "DevOps Simulator - Production Deploy"
+echo "DevOps Simulator - Unified Deployment"
 echo "====================================="
 
-# Configuration
-DEPLOY_ENV="production"
-DEPLOY_REGION="us-east-1"
-APP_PORT=8080
+# Select environment (default = production)
+DEPLOY_ENV=${1:-production}
+
+if [ "$DEPLOY_ENV" == "production" ]; then
+    DEPLOY_REGION="us-east-1"
+    APP_PORT=8080
+    APP_URL="https://app.example.com"
+elif [ "$DEPLOY_ENV" == "development" ]; then
+    DEPLOY_REGION="local"
+    APP_PORT=3000
+    APP_URL="http://localhost:$APP_PORT"
+else
+    echo "Error: Unknown environment '$DEPLOY_ENV'"
+    echo "Usage: ./deploy.sh [production|development]"
+    exit 1
+fi
 
 echo "Environment: $DEPLOY_ENV"
 echo "Region: $DEPLOY_REGION"
@@ -29,8 +42,13 @@ echo "Starting deployment..."
 echo "Pulling latest Docker images..."
 # docker pull devops-simulator:latest
 
-echo "Rolling update strategy initiated..."
-# kubectl rolling-update devops-simulator
+if [ "$DEPLOY_ENV" == "production" ]; then
+    echo "Applying rolling update strategy..."
+    # kubectl rolling-update devops-simulator
+else
+    echo "Launching development server..."
+    # npm run dev or docker-compose up
+fi
 
 echo "Deployment completed successfully!"
-echo "Application available at: https://app.example.com"
+echo "Application available at: $APP_URL"
